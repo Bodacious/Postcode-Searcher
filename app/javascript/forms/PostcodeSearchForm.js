@@ -9,8 +9,27 @@
 //
 // Returns void
 function displayOutput(text) {
-  const output = document.querySelector('.postcode_search__output');
+  const output = document.querySelector('.postcode_search__output')
   output.innerHTML = text;
+}
+
+function onSubmit() {
+  displayOutput(`Searching...`)
+}
+
+function onSuccess(event) {
+  const [data, _status, _xhr] = event.detail
+  if (data.in_service_area) {
+    displayOutput(`Great! We service your area ${data.lsoa}!`)
+  } else {
+    displayOutput(`Sorry! We don't service your area '${data.lsoa}' yet`)
+  }
+}
+
+function onError(event) {
+  const [data,_status, _xhr] = event.detail;
+  const input = document.querySelector(".postcode_search__input")
+  displayOutput(`Error! '${input.value}' ${data["errors"]["postcode"]}`)
 }
 
 ////
@@ -20,26 +39,13 @@ function init() {
   if (form == null || form == undefined) { return }
 
   // Display a message while waiting to hear back from server...
-  form.addEventListener("ajax:before", (event) => {
-    displayOutput(`Searching...`)
-  });
+  form.addEventListener("ajax:before", onSubmit);
 
   // Display feedback when server responds 200
-  form.addEventListener("ajax:success", (event) => {
-    const [data, _status, _xhr] = event.detail;
-    if (data.in_service_area) {
-      displayOutput(`Great! We service your area ${data.lsoa}!`)
-    } else {
-      displayOutput(`Sorry! We don't service your area '${data.lsoa}' yet`)
-    }
-  });
+  form.addEventListener("ajax:success", onSuccess);
 
   // Display feedback when server responds 4--
-  form.addEventListener("ajax:error", (event) => {
-    const [data, _status, _xhr] = event.detail;
-    const input = document.querySelector(".postcode_search__input")
-    displayOutput(`Error! '${input.value}' ${data["errors"]["postcode"]}`)
-  });
+  form.addEventListener("ajax:error", onError);
 }
 
 export { init };
