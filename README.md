@@ -32,6 +32,8 @@ yard doc --plugin tomdoc --hide-void-return --title "Postcode Search" --markup=m
 
 The above command will create HTML at `doc/index.html` which you can view in your browser.
 
+The code is documented using the [TomDoc format](https://tomdoc.org)
+
 ## Notes
 
 ### Postcodes IO Gem
