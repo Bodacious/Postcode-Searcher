@@ -62,7 +62,7 @@ It seemed like overkill to create a database table and model for ServiceableArea
 
 ### WebMock
 
-Webmock, annoyingly, will try to update driver versions while you run your tests. If you're also blocking external requests (which I do in this app) then this is blocked and will result in a confusing error about Chrome or Mozilla. To fix this, comment out the `WebMock.disable_net_connect!(allow_localhost: true)` and uncomment the line below `WebMock.allow_net_connect!` then run the tests again. Once the drivers have been updated, remember to switch those configurations back to the way they were.
+Webmock, annoyingly, will try to update driver versions while you run your tests. If you're also blocking external requests (which I do in this app) then this blocks the driver download and will result in a confusing error about Chrome or Mozilla. To fix this, comment out the `WebMock.disable_net_connect!(allow_localhost: true)` and uncomment the line below `WebMock.allow_net_connect!` then run the tests again. Once the drivers have been updated, remember to switch those configurations back to the way they were.
 
 ### Outward searches only
 
