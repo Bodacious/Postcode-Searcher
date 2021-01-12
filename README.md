@@ -14,13 +14,13 @@ To get started, run `rails db:setup`. This will create a local dev and test data
 
 ## Run the app
 
-This is a typical Rails 6.1 setup, with the unused libraries removed. You can run the server locally with `rails server`.
+This is a typical Rails 6.1 setup, [with the unused libraries removed](https://github.com/Bodacious/Postcode-Searcher/blob/main/config/application.rb#L3-L7). You can run the server locally with `rails server`.
 
 Type in a value to the form field and click "Search" to find out if a postcode is within the service area.
 
 ## Run the tests
 
-The code is tested using RSpec. To run the tests, use `rspec spec`. Please note the _gotcha_ concerning Webmock.
+The code is tested using RSpec. To run the tests, use `rspec spec`. Please note the [_gotcha_ concerning Webmock](https://github.com/Bodacious/Postcode-Searcher#webmock).
 
 ## Create documentation
 
@@ -32,7 +32,7 @@ yard doc --plugin tomdoc --hide-void-return --title "Postcode Search" --markup=m
 
 The above command will create HTML at `doc/index.html` which you can view in your browser.
 
-The code is documented using the [TomDoc format](https://tomdoc.org)
+The code is documented using the [TomDoc format](https://tomdoc.org).
 
 ## Notes
 
@@ -42,15 +42,17 @@ I noticed there's already a [postcodes IO gem](https://github.com/jamesruston/po
 
 ### Repository pattern
 
-The brief describes two separate places in which to search for data relating to a single search. I approached this problem by injecting these two _repositories_ into the search service object as a parameter (See PostcodeFinder). This made it easier to test in isolation, while also providing a scalable design pattern for adding future data repositories (which might include a cache store or alternative remote service).
+The brief describes two separate places in which to search for data relating to a single search (locally, and the remote API). I approached this problem by injecting these two _repositories_ into the search service object as a parameter (See PostcodeFinder). This made it easier to test my service object in isolation, while also providing a scalable design pattern for adding future data repositories (which might include a cache store or alternative remote service).
 
 ### Postcode object
 
-I defined a Postcode class in the base lib directory as a single source of truth for _postcodes_ within the system. I felt this approach would be easier to maintain as the system grows and future requirements change. I opted for a `Object.parse` pattern, since it's a commonly used ruby idiom, and provides out-of-the box compatibility with various libraries (e.g. the Grape API library).
+I defined a Postcode class in the base lib directory as a single source of truth for _postcodes_ within the system. I felt this approach, rather than just using strings everywhere, would be easier to maintain as the system grows and future requirements change.
+
+I opted for an `Object.parse` pattern, since it's a commonly used ruby idiom (e.g. Date, URI, etc.), and provides out-of-the box compatibility with various libraries (e.g. the Grape API library).
 
 ### StoredPostcode
 
-The brief states that specific unrecognised postcodes, or specific postcodes outside of the service areas should still be supported by the system. The StoredPostcode model is a simple, local data store that provides this functionality. Records must have a valid UK postcode format, but can have any LSOA—which can be used to cater to postcodes whose real LSOA is outside the service area.
+The brief states that specified unrecognised postcodes, or specified postcodes outside of the service areas should still be supported by the system. The StoredPostcode model is a simple, local data store that provides this functionality. Records must have a valid UK postcode format, but can have any LSOA—which can be used to cater to postcodes for which the real LSOA is outside the service area.
 
 Local storage is searched before the postcodes.io database so that LSOA values can be overwritten if desired (i.e. to support a postcode outside the service area).
 
@@ -61,3 +63,7 @@ It seemed like overkill to create a database table and model for ServiceableArea
 ### WebMock
 
 Webmock, annoyingly, will try to update driver versions while you run your tests. If you're also blocking external requests (which I do in this app) then this is blocked and will result in a confusing error about Chrome or Mozilla. To fix this, comment out the `WebMock.disable_net_connect!(allow_localhost: true)` and uncomment the line below `WebMock.allow_net_connect!` then run the tests again. Once the drivers have been updated, remember to switch those configurations back to the way they were.
+
+### Outward searches only
+
+Unfortunately, I didn't have as much time to commit to investigating this problem as I would have liked. But I would have been curious to learn more about the requirements, and also about how postcodes work, to see if the scale of the problem could be greatly reduced by searching only the "outward" component of a postcode—of which there are far fewer.

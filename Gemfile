@@ -62,15 +62,19 @@ group :development do
   # Add comments to your Gemfile with each dependency's description. (https://github.com/ivantsepp/annotate_gem)
   gem "annotate_gem"
 
+  # Simple gem that adds several rake tasks to annotate Rails source files with model schema. (https://github.com/bitaxis/annotate_models.git)
   gem "annotate_models"
 
   # RSpec for Rails (https://github.com/rspec/rspec-rails)
   gem "rspec-rails"
 
+  # Documentation tool for consistent and usable documentation in Ruby. (http://yardoc.org)
   gem "yard"
 
+  # TomDoc for YARD (http://rubyworks.github.com/yard-tomdoc)
   gem "yard-tomdoc"
 
+  # kramdown is a fast, pure-Ruby Markdown-superset converter. (http://kramdown.gettalong.org)
   gem "kramdown"
 end
 
