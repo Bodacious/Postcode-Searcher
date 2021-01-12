@@ -1,0 +1,28 @@
+AllCops:
+    NewCops: enable
+
+Style/FormatStringToken:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*_spec.rb
+    - "**/*.rake"
+
+Metrics/MethodLength:
+  Exclude:
+    - spec/**/*.rb
+
+Style/Documentation:
+  Exclude:
+    - app/controllers/**/*.rb
+    - db/migrate/**/*.rb
+
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    # This is a special case because of how repository classes are loaded
+    - spec/services/postcode_finder_spec.rb
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - "**/*.rake"

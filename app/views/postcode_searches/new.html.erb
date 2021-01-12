@@ -1,0 +1,12 @@
+<h1>Enter your postcode to see if we service your area</h1>
+
+<%= form_for(@postcode_search, remote: true, local: true, html: { class: "postcode_search" }) do |f| %>
+
+  <%= f.label(:postcode) %>
+  <%= f.text_field(:postcode, required: true, class: "postcode_search__input") %>
+
+
+  <%= f.submit("Search") %>
+  <%= tag.div class: "postcode_search__output" %>
+
+<% end %>
