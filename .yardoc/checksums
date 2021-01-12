@@ -1,6 +1,6 @@
 lib/postcode.rb ab65457ed8627e0c503a98e368fdee0e1212d66b
 lib/postcodes_io.rb 9c38500229790909a9600412713dd4e81fa38387
-lib/postcodes_io/request.rb 0966bd2e7e7379fd30220fab93b02e982167393a
+lib/postcodes_io/request.rb 48833b4892b2ba09ec92b0e808806cedcf930441
 lib/postcodes_io/postcode.rb 9e4a45a28905bd34e1ab67077685f9fcc8680cb7
 app/models/postcode_search.rb f416686904d6cb6b818b56e814ac73c656ec39bd
 app/models/stored_postcode.rb 707b2638b79bf15c96e36a9530d4288f2dbd73d8
